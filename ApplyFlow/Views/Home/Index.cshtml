@@ -1,8 +1,14 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "ApplyFlow|Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome to ApplyFlow!</h1>
+    <p>Your journey to seamless application management starts here.</p>
+    <p><a href="/Dashboard" class="btn btn-primary btn-lg">Go to Dashboard</a></p>
+
+    @if(!User.Identity!.IsAuthenticated )
+    {
+        <p><a href="/Account/Login" class="btn btn-primary btn-lg">Login</a> or <a href="/Account/Register" class="btn btn-secondary btn-lg">Register</a></p>
+    }
 </div>
