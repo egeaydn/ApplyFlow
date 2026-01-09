@@ -1,0 +1,25 @@
+﻿@model ApplyFlow.Models.JobApplication
+
+<h2>Create Job Application</h2>
+
+<form asp-action="create" method="post">
+    <div>
+        <label>CompanyName</label>
+        <input asp-for="CompanyName" type="text" />
+    </div>
+    <div>
+        <label>Position</label>
+        <input asp-for="Position" type="text"/>
+    </div>
+    <div>
+        <label>Notes</label>
+        <textarea asp-for="Notes" />
+    </div>
+    <div>
+        <label>Job Link</label>
+        <input asp-for="JobLink" type="text" />
+    </div>
+
+    <button type="submit">Save & Create</button>
+
+</form> 

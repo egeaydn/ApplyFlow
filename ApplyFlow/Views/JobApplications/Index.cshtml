@@ -1,0 +1,31 @@
+﻿@model IEnumerable<ApplyFlow.Models.JobApplication>
+
+<h2>Job Applications</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Applicant Name</th>
+            <th>Position</th>
+            <th>Status</th>
+            <th>Applied On</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var application in Model)
+    {
+        <tr>
+            <td>@application.CompanyName</td>
+            <td>@application.Position</td>
+            <td>@application.Status</td>
+            <td>@application.AppliedDate.ToShortDateString()</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@application.Id">Details</a> |
+                <a asp-action="Edit" asp-route-id="@application.Id">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@application.Id">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
