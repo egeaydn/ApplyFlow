@@ -1,4 +1,5 @@
 ﻿using ApplyFlow.Identity;
+using ApplyFlow.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,10 +17,11 @@ namespace ApplyFlow.Controllers
 			AppDbContext dbContext,
 			UserManager<ApplicationUser> applicationUser
 		)
-
 		{
-			
+			_dbContext = dbContext;
+			_applicationUser = applicationUser;
 		}
+
 		public async Task <IActionResult> Index()
 		{
 			var userId = _applicationUser.GetUserId(User);
@@ -30,6 +32,27 @@ namespace ApplyFlow.Controllers
 				.ToListAsync();
 
 			return View(applications);
+		}
+
+		public IActionResult Create()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> Create(JobApplication model)
+		{
+			if (!ModelState.IsValid)
+			{
+				return View(model);
+			}
+			model.ApplicationUserId = _applicationUser.GetUserId(User)!;
+			model.CreatedAt = DateTime.UtcNow;
+
+			_dbContext.JobApplications.Add(model);
+			await _dbContext.SaveChangesAsync();
+
+			return RedirectToAction(nameof(Index));
 		}
 	}
 }
