@@ -1,0 +1,13 @@
+﻿@model ApplyFlow.ViewModel.RegisterViewModel
+
+<h2>Register</h2>
+
+<form method="post">
+    <input asp-for="FirstName" placeholder="First name" />
+    <input asp-for="LastName" placeholder="Last name" />
+    <input asp-for="Email" placeholder="Email" />
+    <input asp-for="Password" placeholder="Password" />
+    <input asp-for="ConfirmPassword" placeholder="Confirm Password" />
+
+    <button type="submit">Register</button>
+</form>

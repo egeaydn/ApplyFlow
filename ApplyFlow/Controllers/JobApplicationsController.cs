@@ -33,12 +33,12 @@ namespace ApplyFlow.Controllers
 
 			return View(applications);
 		}
-
+		[Authorize]
 		public IActionResult Create()
 		{
 			return View();
 		}
-
+		[Authorize]
 		[HttpPost]
 		public async Task<IActionResult> Create(JobApplication model)
 		{
@@ -48,6 +48,14 @@ namespace ApplyFlow.Controllers
 			}
 			model.ApplicationUserId = _applicationUser.GetUserId(User)!;
 			model.CreatedAt = DateTime.UtcNow;
+
+			var errors = ModelState
+			   .SelectMany(x => x.Value.Errors)
+			   .Select(x => x.ErrorMessage)
+			   .ToList();
+
+			foreach (var error in errors)
+				Console.WriteLine(error);
 
 			_dbContext.JobApplications.Add(model);
 			await _dbContext.SaveChangesAsync();

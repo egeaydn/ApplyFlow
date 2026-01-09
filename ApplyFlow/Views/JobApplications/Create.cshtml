@@ -2,24 +2,24 @@
 
 <h2>Create Job Application</h2>
 
-<form asp-action="create" method="post">
+<form asp-action="Create" method="post">
     <div>
         <label>CompanyName</label>
-        <input asp-for="CompanyName" type="text" />
+        <input asp-for="CompanyName"  />
     </div>
     <div>
         <label>Position</label>
-        <input asp-for="Position" type="text"/>
+        <input asp-for="Position" />
+    </div> 
+    <div>
+        <label>Job Link</label>
+        <input asp-for="JobLink" />
     </div>
     <div>
         <label>Notes</label>
-        <textarea asp-for="Notes" />
+        <input asp-for="Notes" />
     </div>
     <div>
-        <label>Job Link</label>
-        <input asp-for="JobLink" type="text" />
+        <button type="submit">Save & Create</button>
     </div>
-
-    <button type="submit">Save & Create</button>
-
 </form> 

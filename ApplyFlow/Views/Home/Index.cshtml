@@ -9,6 +9,10 @@
 
     @if(!User.Identity!.IsAuthenticated )
     {
-        <p><a href="/Account/Login" class="btn btn-primary btn-lg">Login</a> or <a href="/Account/Register" class="btn btn-secondary btn-lg">Register</a></p>
+        <p>
+            <a href="/Auth/Login" class="btn btn-primary btn-lg">Login</a>
+            or 
+            <a href="/Auth/Register" class="btn btn-secondary btn-lg">Register</a>
+        </p>
     }
 </div>

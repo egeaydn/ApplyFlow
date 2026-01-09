@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using ApplyFlow.Enums;
 using ApplyFlow.Identity;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace ApplyFlow.Models
 {
@@ -26,11 +27,11 @@ namespace ApplyFlow.Models
 		[MaxLength(500)]
 		public string? JobLink { get; set; }
 
-		// AUTH LINK
-		[Required]
+		// 👇 SERVER TARAFI
+		[ValidateNever]
 		public string ApplicationUserId { get; set; } = null!;
 
-		[ForeignKey(nameof(ApplicationUserId))]
+		[ValidateNever]
 		public ApplicationUser User { get; set; } = null!;
 
 		public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
