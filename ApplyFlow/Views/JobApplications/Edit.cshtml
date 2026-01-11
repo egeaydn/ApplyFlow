@@ -1,0 +1,41 @@
+﻿@model ApplyFlow.Models.JobApplication
+@using ApplyFlow.Enums
+
+@{
+    ViewData["Title"] = "Edit Job Application";
+}
+
+<h2>Edit Job Application</h2>
+
+<form asp-action="Edit" method="post">>
+ 
+    <input type="hidden" asp-for="Id" />
+
+        <div>
+            <label>@Model.CompanyName</label>
+            <input asp-for="CompanyName" />
+        </div>
+        <div>
+            <label>@Model.Position</label>
+            <input asp-for="Position" />
+        </div>
+        <div>
+            <label>@Model.Status</label>
+            <select asp-for="Status" asp-items="Html.GetEnumSelectList<ApplicationStatus>()"></select>
+        </div>
+        <div>
+            <label>@Model.AppliedDate</label>
+            <input asp-for="AppliedDate" type="date" />
+        </div>
+        <div>
+            <label>@Model.Notes</label>
+            <textarea asp-for="Notes"></textarea>
+        </div>
+        <div>
+            <label>@Model.JobLink</label>
+            <input asp-for="JobLink" />
+        </div>
+
+        <button type="submit">Save</button>
+
+</form>

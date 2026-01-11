@@ -1,0 +1,20 @@
+﻿@model ApplyFlow.Models.JobApplication
+
+@{
+    ViewData["Title"] = "Job Application Details";
+}
+
+<h1>Job Application Details</h1>
+
+<p><strong>Company:</strong> @Model.CompanyName</p>
+<p><strong>Position:</strong> @Model.Position</p>
+<p><strong>Status:</strong> @Model.Status</p>
+<p><strong>Applied Date:</strong> @Model.AppliedDate.ToShortDateString()</p>
+<p><strong>Notes:</strong> @Model.Notes</p>
+<p><strong>Job Link:</strong>
+    @if (!string.IsNullOrEmpty(Model.JobLink))
+    {
+        <a href="@Model.JobLink" target="_blank">Open</a>
+    }
+<a asp-action="Edit" asp-route-id="@Model.Id"></a>
+<a asp-action="Index">Back</a>

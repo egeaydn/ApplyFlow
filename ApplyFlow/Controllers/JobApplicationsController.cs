@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ApplyFlow.Controllers
 {
@@ -22,7 +23,7 @@ namespace ApplyFlow.Controllers
 			_applicationUser = applicationUser;
 		}
 
-		public async Task <IActionResult> Index()
+		public async Task<IActionResult> Index()
 		{
 			var userId = _applicationUser.GetUserId(User);
 
@@ -46,6 +47,7 @@ namespace ApplyFlow.Controllers
 			{
 				return View(model);
 			}
+
 			model.ApplicationUserId = _applicationUser.GetUserId(User)!;
 			model.CreatedAt = DateTime.UtcNow;
 
@@ -62,5 +64,91 @@ namespace ApplyFlow.Controllers
 
 			return RedirectToAction(nameof(Index));
 		}
+		public async Task<IActionResult> Details(int id)
+		{
+			var application = await _dbContext.JobApplications
+				.Include(x => x.User)
+				.FirstOrDefaultAsync(x => x.Id == id);
+
+			if (application == null)
+			{
+				return NotFound();
+			}
+
+			if (application.ApplicationUserId != _applicationUser.GetUserId(User))
+				return Forbid();
+
+			return View(application);
+		}
+
+		public async Task<IActionResult> Edit(int id)
+		{
+
+			var application = await _dbContext.JobApplications.FindAsync(id);
+
+			if (application == null)
+			{
+				return NotFound();
+			}
+
+			if (application.ApplicationUserId != _applicationUser.GetUserId(User))
+				return Forbid();
+
+			return View(application);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Edit(int id, JobApplication model)
+		{
+			if (id != model.Id)
+			{
+				return BadRequest();
+			}
+			if (!ModelState.IsValid)
+			{
+				return View(model);
+			}
+
+			var existing = await _dbContext.JobApplications.FindAsync(id);
+
+			if (existing == null)
+			{
+				return NotFound();
+			}
+
+			if (existing.ApplicationUserId != _applicationUser.GetUserId(User))
+				return Forbid();
+
+			existing.CompanyName = model.CompanyName;
+			existing.Position = model.Position;
+			existing.AppliedDate = model.AppliedDate;
+			existing.Status = model.Status;
+			existing.Notes = model.Notes;
+			existing.JobLink = model.JobLink;
+
+			await _dbContext.SaveChangesAsync();
+
+			return RedirectToAction(nameof(Index));
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Delete(int id)
+		{
+			var application = await _dbContext.JobApplications.FindAsync(id);
+
+			if (application == null)
+				return NotFound();
+
+			_dbContext.JobApplications.Remove(application);
+			await _dbContext.SaveChangesAsync();
+
+			if (application.ApplicationUserId != _applicationUser.GetUserId(User))
+				return Forbid();
+	
+			return RedirectToAction(nameof(Index));
+		}
+
 	}
 }

@@ -23,7 +23,17 @@
             <td>
                 <a asp-action="Details" asp-route-id="@application.Id">Details</a> |
                 <a asp-action="Edit" asp-route-id="@application.Id">Edit</a> |
-                <a asp-action="Delete" asp-route-id="@application.Id">Delete</a>
+                    <form asp-action="Delete"
+                          asp-route-id="@application.Id"
+                          method="post"
+                          style="display:inline;"
+                          onsubmit="return confirm('Bu başvuruyu silmek istediğine emin misin?');">
+
+                        <button type="submit"
+                                style="background:none;border:none;color:red;cursor:pointer;">
+                            Delete
+                        </button>
+                    </form>
             </td>
         </tr>
     }

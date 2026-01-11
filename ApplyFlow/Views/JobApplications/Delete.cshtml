@@ -1,0 +1,17 @@
+﻿@model ApplyFlow.Models.JobApplication
+
+@{
+    ViewData["Title"] = "Job Application Details";
+}
+
+<h2>Delete Application</h2>
+
+<p></p>Are you sure you want to delete the following job application?</p>
+
+<p><strong>@Model.CompanyName</strong>- @Model.Position</p>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit">Yes! Delete</button>
+    <a asp-action="Index">Cancel</a>
+</form>
